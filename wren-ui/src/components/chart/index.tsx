@@ -42,7 +42,7 @@ export default function Chart(props: VegaLiteProps) {
   const {
     className,
     spec,
-    values,
+    values = [],
     width = 600,
     height = 320,
     autoFilter,
