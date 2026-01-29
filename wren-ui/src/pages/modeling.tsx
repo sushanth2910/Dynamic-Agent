@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useSearchParams } from 'next/navigation';
 import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import { message } from 'antd';
+import { Button, message } from 'antd';
 import styled from 'styled-components';
 import { MORE_ACTION, NODE_TYPE } from '@/utils/enum';
 import { editCalculatedField } from '@/utils/modelingHelper';
@@ -11,6 +11,7 @@ import MetadataDrawer from '@/components/pages/modeling/MetadataDrawer';
 import EditMetadataModal from '@/components/pages/modeling/EditMetadataModal';
 import CalculatedFieldModal from '@/components/modals/CalculatedFieldModal';
 import ModelDrawer from '@/components/pages/modeling/ModelDrawer';
+import ImportDrawIoModal from '@/components/modals/ImportDrawIoModal';
 import RelationModal, {
   RelationFormValues,
 } from '@/components/modals/RelationModal';
@@ -57,12 +58,19 @@ const DiagramWrapper = styled.div`
   height: 100%;
 `;
 
+const DiagramToolbar = styled.div`
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 5;
+`;
+
 export default function Modeling() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const diagramRef = useRef(null);
 
-  const { data } = useDiagramQuery({
+  const { data, refetch } = useDiagramQuery({
     fetchPolicy: 'cache-and-network',
     onCompleted: () => {
       diagramRef.current?.fitView();
@@ -207,6 +215,7 @@ export default function Modeling() {
 
   const metadataDrawer = useDrawerAction();
   const modelDrawer = useDrawerAction();
+  const importModal = useModalAction();
   const editMetadataModal = useModalAction();
   const calculatedFieldModal = useModalAction();
   const relationshipModal = useRelationshipModal(diagramData);
@@ -388,6 +397,14 @@ export default function Modeling() {
         }}
       >
         <DiagramWrapper>
+          <DiagramToolbar>
+            <Button
+              size="small"
+              onClick={importModal.openModal}
+            >
+              Import draw.io
+            </Button>
+          </DiagramToolbar>
           <ForwardDiagram
             ref={diagramRef}
             data={diagramData}
@@ -482,6 +499,14 @@ export default function Modeling() {
                 },
               });
             }
+          }}
+        />
+        <ImportDrawIoModal
+          visible={importModal.state.visible}
+          onClose={importModal.closeModal}
+          onImported={async () => {
+            await refetch();
+            deployStatusQueryResult.refetch();
           }}
         />
       </SiderLayout>

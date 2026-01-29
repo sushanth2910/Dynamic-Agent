@@ -214,11 +214,14 @@ export class ProjectService implements IProjectService {
   }
 
   public async createProject(projectData: ProjectData) {
+    const isDuckDB = projectData.type === DataSourceName.DUCKDB;
+    const defaultCatalog = isDuckDB ? 'memory' : 'wrenai';
+    const defaultSchema = isDuckDB ? 'main' : 'public';
     const projectValue = {
       displayName: projectData.displayName,
       type: projectData.type,
-      catalog: 'wrenai',
-      schema: 'public',
+      catalog: defaultCatalog,
+      schema: defaultSchema,
       connectionInfo: encryptConnectionInfo(
         projectData.type,
         projectData.connectionInfo,
