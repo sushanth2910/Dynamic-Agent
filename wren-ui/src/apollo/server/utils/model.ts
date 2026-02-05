@@ -14,9 +14,9 @@ export function getPreviewColumnsStr(modelColumns: ModelColumn[]) {
 
 export function transformInvalidColumnName(columnName: string) {
   let referenceName = replaceAllowableSyntax(columnName);
-  // If the reference name does not start with a letter, add a prefix
-  const startWithLetterRegex = /^[A-Za-z]/;
-  if (!startWithLetterRegex.test(referenceName)) {
+  // If the reference name does not start with a letter or underscore, add a prefix
+  const startWithLetterOrUnderscoreRegex = /^[A-Za-z_]/;
+  if (!startWithLetterOrUnderscoreRegex.test(referenceName)) {
     referenceName = `col_${referenceName}`;
   }
   return referenceName;

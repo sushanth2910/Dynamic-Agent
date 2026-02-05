@@ -40,6 +40,8 @@ const RELATION_ARROW = '\u2192';
 const DEFAULT_TYPE = 'UNKNOWN';
 
 const stripTags = (value: string) => value.replace(/<[^>]+>/g, '');
+const stripTypeAnnotations = (value?: string) =>
+  value ? value.replace(/\s+[\(\[].*$/, '').trim() : value;
 
 const parseTableName = (value: string) =>
   stripTags(value).replace(/\s*\([^)]*\)\s*$/, '').trim();
@@ -88,7 +90,9 @@ const parseFieldValue = (value: string) => {
   const colonIndex = text.indexOf(':');
   const name = (colonIndex === -1 ? text : text.slice(0, colonIndex)).trim();
   const type =
-    colonIndex === -1 ? undefined : text.slice(colonIndex + 1).trim();
+    colonIndex === -1
+      ? undefined
+      : stripTypeAnnotations(text.slice(colonIndex + 1).trim());
 
   if (!name) return null;
 

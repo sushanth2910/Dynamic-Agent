@@ -1,0 +1,364 @@
+<mxGraphModel dx="2100" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="5000" pageHeight="5000" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    
+    <!-- Title -->
+    <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=24;fontStyle=1" value="ProdOC Database ERD - Wren AI Optimized Schema (6 Collections)" vertex="1">
+      <mxGeometry height="40" width="900" x="50" y="20" as="geometry" />
+    </mxCell>
+    
+    <!-- HIERARCHY LEGEND -->
+    <mxCell id="legend" parent="1" style="text;html=1;strokeColor=#333333;fillColor=#f5f5f5;align=left;verticalAlign=top;spacingLeft=10;spacingTop=5;fontSize=11;rounded=1" value="🔶 Base Tables (PK = _id): users, phonebooks, branches, departments&#xa;🔷 Derived Tables: patients, appointments&#xa;&#xa;Key Relationships:&#xa;• appointments.contact_id → patients.contact_id (N:1)&#xa;• patients.contact_id → phonebooks._id (1:1)&#xa;• appointments.user_id → users._id (N:1) [Doctor]&#xa;• appointments.admin → users._id (N:1) [Admin]&#xa;• appointments.department_id → departments._id (N:1)&#xa;• appointments.branch_id → branches._id (N:1)&#xa;• users.department → departments._id (N:1)&#xa;• users.branch → branches._id (N:1)" vertex="1">
+      <mxGeometry height="200" width="380" x="1300" y="80" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== BASE TABLE: USERS ==================== -->
+    <mxCell id="table_users" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=3;fontSize=13;" value="users (Base Table)" vertex="1">
+      <mxGeometry height="438" width="320" x="50" y="80" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_id" parent="table_users" style="text;strokeColor=none;fillColor=#ffcc00;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;fontSize=11" value="🔑 _id: VARCHAR (PK - Unique Identifier)" vertex="1">
+      <mxGeometry height="24" width="320" y="30" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_email" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    email: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="54" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_username" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    username: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="78" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_phone" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    phone: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="102" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_type" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    type: INTEGER" vertex="1">
+      <mxGeometry height="24" width="320" y="126" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_take_appointments" parent="table_users" style="text;strokeColor=none;fillColor=#fff2cc;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontStyle=2" value="    take_appointments: BOOLEAN (true=Doctor)" vertex="1">
+      <mxGeometry height="24" width="320" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_on_call" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    on_call: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="320" y="174" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_manage_leads" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    manage_leads: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="320" y="198" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_isFieldAgent" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    isFieldAgent: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="320" y="222" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_is_care_coordinator" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    is_care_coordinator: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="320" y="246" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_department" parent="table_users" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 department: VARCHAR (FK → departments._id)" vertex="1">
+      <mxGeometry height="24" width="320" y="270" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_branch" parent="table_users" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 branch: VARCHAR (FK → branches._id)" vertex="1">
+      <mxGeometry height="24" width="320" y="294" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_admin" parent="table_users" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 admin: VARCHAR (FK → users._id) [Parent User]" vertex="1">
+      <mxGeometry height="24" width="320" y="318" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_created_by" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    created_by: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="342" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_credits" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    credits: INTEGER" vertex="1">
+      <mxGeometry height="24" width="320" y="366" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_createdAt" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    createdat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="320" y="390" as="geometry" />
+    </mxCell>
+    <mxCell id="field_users_updatedAt" parent="table_users" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    updatedat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="320" y="414" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== BASE TABLE: BRANCHES ==================== -->
+    <mxCell id="table_branches" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=3;fontSize=13;" value="branches (Base Table)" vertex="1">
+      <mxGeometry height="222" width="300" x="450" y="80" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_id" parent="table_branches" style="text;strokeColor=none;fillColor=#ffcc00;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;fontSize=11" value="🔑 _id: VARCHAR (PK - Unique Identifier)" vertex="1">
+      <mxGeometry height="24" width="300" y="30" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_name" parent="table_branches" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    name: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="54" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_admin" parent="table_branches" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 admin: VARCHAR (FK → users._id)" vertex="1">
+      <mxGeometry height="24" width="300" y="78" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_clinic_id" parent="table_branches" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    clinic_id: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="102" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_address_line" parent="table_branches" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    address_line: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="126" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_city" parent="table_branches" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    city: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_state" parent="table_branches" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    state: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="174" as="geometry" />
+    </mxCell>
+    <mxCell id="field_branches_contact" parent="table_branches" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    contact: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="198" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== BASE TABLE: DEPARTMENTS ==================== -->
+    <mxCell id="table_departments" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=3;fontSize=13;" value="departments (Base Table)" vertex="1">
+      <mxGeometry height="222" width="300" x="450" y="340" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_id" parent="table_departments" style="text;strokeColor=none;fillColor=#ffcc00;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;fontSize=11" value="🔑 _id: VARCHAR (PK - Unique Identifier)" vertex="1">
+      <mxGeometry height="24" width="300" y="30" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_name" parent="table_departments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    name: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="54" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_admin" parent="table_departments" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 admin: VARCHAR (FK → users._id)" vertex="1">
+      <mxGeometry height="24" width="300" y="78" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_slotDuration" parent="table_departments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    slotDuration: INTEGER (default: 15)" vertex="1">
+      <mxGeometry height="24" width="300" y="102" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_timing_from" parent="table_departments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    timing_from: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="126" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_timing_to" parent="table_departments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    timing_to: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_queueType" parent="table_departments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    queueType: VARCHAR (static/dynamic)" vertex="1">
+      <mxGeometry height="24" width="300" y="174" as="geometry" />
+    </mxCell>
+    <mxCell id="field_departments_consultation_fee" parent="table_departments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    consultation_fee: INTEGER" vertex="1">
+      <mxGeometry height="24" width="300" y="198" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== BASE TABLE: PHONEBOOKS ==================== -->
+    <mxCell id="table_phonebooks" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=3;fontSize=13;" value="phonebooks (Base Table)" vertex="1">
+      <mxGeometry height="270" width="300" x="830" y="80" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_id" parent="table_phonebooks" style="text;strokeColor=none;fillColor=#ffcc00;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;fontSize=11" value="🔑 _id: VARCHAR (PK - Unique Identifier)" vertex="1">
+      <mxGeometry height="24" width="300" y="30" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_name" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    name: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="54" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_phone" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    phone: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="78" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_email" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    email: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="102" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_admin" parent="table_phonebooks" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 admin: VARCHAR (FK → users._id)" vertex="1">
+      <mxGeometry height="24" width="300" y="126" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_branch" parent="table_phonebooks" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 branch: VARCHAR (FK → branches._id)" vertex="1">
+      <mxGeometry height="24" width="300" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_tags" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    tags: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="300" y="174" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_unsubscribed" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    unsubscribed: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="300" y="198" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_blocked" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    blocked: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="300" y="222" as="geometry" />
+    </mxCell>
+    <mxCell id="field_phonebooks_createdAt" parent="table_phonebooks" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    createdat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="300" y="246" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== DERIVED TABLE: PATIENTS ==================== -->
+    <mxCell id="table_patients" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=3;fontSize=13;" value="patients (Derived Table)" vertex="1">
+      <mxGeometry height="318" width="320" x="830" y="400" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_id" parent="table_patients" style="text;strokeColor=none;fillColor=#ffcc00;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;fontSize=11" value="🔑 _id: VARCHAR (PK)" vertex="1">
+      <mxGeometry height="24" width="320" y="30" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_contact_id" parent="table_patients" style="text;strokeColor=none;fillColor=#c8e6c9;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#2e7d32;fontSize=11;fontStyle=1" value="🔗 contact_id: VARCHAR (FK → phonebooks._id) [1:1]" vertex="1">
+      <mxGeometry height="24" width="320" y="54" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_name" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    name: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="78" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_phone" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    phone: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="102" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_email" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    email: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="126" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_age" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    age: INTEGER" vertex="1">
+      <mxGeometry height="24" width="320" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_dob" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    dob: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="320" y="174" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_gender" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    gender: VARCHAR (Male/Female/Other)" vertex="1">
+      <mxGeometry height="24" width="320" y="198" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_guardian" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    guardian: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="320" y="222" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_admin" parent="table_patients" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 admin: VARCHAR (FK → users._id)" vertex="1">
+      <mxGeometry height="24" width="320" y="246" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_createdAt" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    createdat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="320" y="270" as="geometry" />
+    </mxCell>
+    <mxCell id="field_patients_updatedAt" parent="table_patients" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    updatedat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="320" y="294" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== DERIVED TABLE: APPOINTMENTS ==================== -->
+    <mxCell id="table_appointments" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=3;fontSize=13;" value="appointments (Derived Table)" vertex="1">
+      <mxGeometry height="414" width="340" x="50" y="580" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_id" parent="table_appointments" style="text;strokeColor=none;fillColor=#ffcc00;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=1;fontSize=11" value="🔑 _id: VARCHAR (PK)" vertex="1">
+      <mxGeometry height="24" width="340" y="30" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_contact_id" parent="table_appointments" style="text;strokeColor=none;fillColor=#c8e6c9;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#2e7d32;fontSize=11;fontStyle=1" value="🔗 contact_id: VARCHAR (FK → patients.contact_id) [N:1]" vertex="1">
+      <mxGeometry height="24" width="340" y="54" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_user_id" parent="table_appointments" style="text;strokeColor=none;fillColor=#fff3e0;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#e65100;fontSize=11;fontStyle=1" value="🔗 user_id: VARCHAR (FK → users._id) [N:1] [Doctor]" vertex="1">
+      <mxGeometry height="24" width="340" y="78" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_admin" parent="table_appointments" style="text;strokeColor=none;fillColor=#fff3e0;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#e65100;fontSize=11;fontStyle=1" value="🔗 admin: VARCHAR (FK → users._id) [N:1] [Admin]" vertex="1">
+      <mxGeometry height="24" width="340" y="102" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_department_id" parent="table_appointments" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 department_id: VARCHAR (FK → departments._id)" vertex="1">
+      <mxGeometry height="24" width="340" y="126" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_branch_id" parent="table_appointments" style="text;strokeColor=none;fillColor=#e6f2ff;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontColor=#0066CC;fontSize=11" value="🔗 branch_id: VARCHAR (FK → branches._id)" vertex="1">
+      <mxGeometry height="24" width="340" y="150" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_date" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    appointment_date: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="340" y="174" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_status" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    status: VARCHAR (new/ongoing/completed/cancelled/noshow)" vertex="1">
+      <mxGeometry height="24" width="340" y="198" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_type" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    appointment_type: VARCHAR (self/manual/tele-caller/etc)" vertex="1">
+      <mxGeometry height="24" width="340" y="222" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_patient_name" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    patient_name: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="340" y="246" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_is_walk_in" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    is_walk_in: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="340" y="270" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_is_follow_up" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    is_follow_up_appointment: BOOLEAN" vertex="1">
+      <mxGeometry height="24" width="340" y="294" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_payment_status" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    payment_status: VARCHAR (pending/authorized/captured)" vertex="1">
+      <mxGeometry height="24" width="340" y="318" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_notes" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    notes: VARCHAR" vertex="1">
+      <mxGeometry height="24" width="340" y="342" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_createdAt" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    createdat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="340" y="366" as="geometry" />
+    </mxCell>
+    <mxCell id="field_appointments_updatedAt" parent="table_appointments" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11" value="    updatedat: TIMESTAMP" vertex="1">
+      <mxGeometry height="24" width="340" y="390" as="geometry" />
+    </mxCell>
+
+    <!-- ==================== RELATIONSHIPS ==================== -->
+    
+    <!-- users.department → departments._id -->
+    <mxCell id="rel_users_departments" edge="1" parent="1" source="field_users_department" target="field_departments_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#d6b656;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+
+    <!-- users.branch → branches._id -->
+    <mxCell id="rel_users_branches" edge="1" parent="1" source="field_users_branch" target="field_branches_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#b85450;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+
+    <!-- phonebooks.admin → users._id -->
+    <mxCell id="rel_phonebooks_users" edge="1" parent="1" source="field_phonebooks_admin" target="field_users_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#0066CC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+
+    <!-- phonebooks.branch → branches._id -->
+    <mxCell id="rel_phonebooks_branches" edge="1" parent="1" source="field_phonebooks_branch" target="field_branches_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#b85450;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+
+    <!-- patients.contact_id → phonebooks._id (1:1) - KEY RELATIONSHIP -->
+    <mxCell id="rel_patients_phonebooks" edge="1" parent="1" source="field_patients_contact_id" target="field_phonebooks_id" style="endArrow=ERone;startArrow=ERone;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=3;strokeColor=#2e7d32;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+    <mxCell id="rel_patients_phonebooks_label" parent="1" style="text;html=1;strokeColor=none;fillColor=#c8e6c9;align=center;verticalAlign=middle;fontSize=10;fontColor=#2e7d32;fontStyle=1;rounded=1" value="1:1 (contact_id = _id)" vertex="1">
+      <mxGeometry height="20" width="130" x="990" y="365" as="geometry" />
+    </mxCell>
+
+    <!-- patients.admin → users._id -->
+    <mxCell id="rel_patients_users" edge="1" parent="1" source="field_patients_admin" target="field_users_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#0066CC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+
+    <!-- appointments.contact_id → patients.contact_id (N:1) - KEY RELATIONSHIP -->
+    <mxCell id="rel_appointments_patients_contact" edge="1" parent="1" source="field_appointments_contact_id" target="field_patients_contact_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=3;strokeColor=#2e7d32;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+    <mxCell id="rel_appointments_patients_label" parent="1" style="text;html=1;strokeColor=none;fillColor=#c8e6c9;align=center;verticalAlign=middle;fontSize=10;fontColor=#2e7d32;fontStyle=1;rounded=1" value="N:1 (One Patient = Many Appointments)" vertex="1">
+      <mxGeometry height="20" width="220" x="500" y="630" as="geometry" />
+    </mxCell>
+
+    <!-- appointments.user_id → users._id (Doctor) -->
+    <mxCell id="rel_appointments_users_doctor" edge="1" parent="1" source="field_appointments_user_id" target="field_users_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=3;strokeColor=#e65100;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry">
+        <Array as="points">
+          <mxPoint x="30" y="670" />
+          <mxPoint x="30" y="122" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rel_appointments_users_doctor_label" parent="1" style="text;html=1;strokeColor=none;fillColor=#fff3e0;align=center;verticalAlign=middle;fontSize=10;fontColor=#e65100;fontStyle=1;rounded=1" value="N:1 Doctor (user_id → _id)" vertex="1">
+      <mxGeometry height="20" width="150" x="15" y="380" as="geometry" />
+    </mxCell>
+
+    <!-- appointments.admin → users._id (Admin) -->
+    <mxCell id="rel_appointments_users_admin" edge="1" parent="1" source="field_appointments_admin" target="field_users_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=3;strokeColor=#e65100;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;dashed=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry">
+        <Array as="points">
+          <mxPoint x="20" y="694" />
+          <mxPoint x="20" y="122" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rel_appointments_users_admin_label" parent="1" style="text;html=1;strokeColor=none;fillColor=#fff3e0;align=center;verticalAlign=middle;fontSize=10;fontColor=#e65100;fontStyle=1;rounded=1" value="N:1 Admin (admin → _id)" vertex="1">
+      <mxGeometry height="20" width="150" x="15" y="420" as="geometry" />
+    </mxCell>
+
+    <!-- appointments.department_id → departments._id -->
+    <mxCell id="rel_appointments_departments" edge="1" parent="1" source="field_appointments_department_id" target="field_departments_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#d6b656;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry">
+        <Array as="points">
+          <mxPoint x="420" y="718" />
+          <mxPoint x="420" y="382" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- appointments.branch_id → branches._id -->
+    <mxCell id="rel_appointments_branches" edge="1" parent="1" source="field_appointments_branch_id" target="field_branches_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#b85450;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry">
+        <Array as="points">
+          <mxPoint x="410" y="742" />
+          <mxPoint x="410" y="122" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- branches.admin → users._id -->
+    <mxCell id="rel_branches_users" edge="1" parent="1" source="field_branches_admin" target="field_users_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#0066CC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry" />
+    </mxCell>
+
+    <!-- departments.admin → users._id -->
+    <mxCell id="rel_departments_users" edge="1" parent="1" source="field_departments_admin" target="field_users_id" style="endArrow=ERone;startArrow=ERmany;endFill=0;startFill=0;endSize=10;startSize=10;html=1;strokeWidth=2;strokeColor=#0066CC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;curved=1;" value="">
+      <mxGeometry height="100" relative="1" width="100" as="geometry">
+        <Array as="points">
+          <mxPoint x="400" y="430" />
+          <mxPoint x="400" y="122" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

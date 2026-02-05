@@ -31,6 +31,7 @@ import {
   IViewRepository,
   Project,
 } from '../repositories';
+import { DeployStatusEnum } from '../repositories/deployLogRepository';
 import { IQueryService, PreviewDataResponse } from './queryService';
 import { IMDLService } from './mdlService';
 import {
@@ -1054,9 +1055,56 @@ export class AskingService implements IAskingService {
   }
 
   private async getDeployId() {
-    const { id } = await this.projectService.getCurrentProject();
-    const lastDeploy = await this.deployService.getLastDeployment(id);
+    const project = await this.projectService.getCurrentProject();
+    const { manifest } = await this.mdlService.makeCurrentModelMDL();
+    const currentHash = this.deployService.createMDLHash(
+      manifest,
+      project.id,
+    );
+
+    await this.waitForDeployment(project.id);
+
+    let lastDeploy = await this.deployService.getLastDeployment(project.id);
+    if (!lastDeploy || lastDeploy.hash !== currentHash) {
+      logger.info(
+        `Model not synced; deploying latest MDL before asking (hash: ${currentHash})`,
+      );
+      const deployRes = await this.deployService.deploy(
+        manifest,
+        project.id,
+        false,
+      );
+      if (deployRes.status !== DeployStatusEnum.SUCCESS) {
+        throw new Error(
+          deployRes.error || 'Model deployment failed, please retry.',
+        );
+      }
+      lastDeploy = await this.deployService.getLastDeployment(project.id);
+    }
+
+    if (!lastDeploy) {
+      throw new Error('No deployment found. Please deploy the model first.');
+    }
+
     return lastDeploy.hash;
+  }
+
+  private async waitForDeployment(
+    projectId: number,
+    maxRetries = 30,
+    intervalMs = 1000,
+  ) {
+    for (let attempt = 0; attempt < maxRetries; attempt += 1) {
+      const inProgress =
+        await this.deployService.getInProgressDeployment(projectId);
+      if (!inProgress) {
+        return;
+      }
+      await new Promise((resolve) => setTimeout(resolve, intervalMs));
+    }
+    throw new Error(
+      'Model deployment is still in progress. Please retry in a few seconds.',
+    );
   }
 
   public async adjustThreadResponseWithSQL(

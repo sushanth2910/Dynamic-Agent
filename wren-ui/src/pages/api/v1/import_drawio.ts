@@ -40,6 +40,8 @@ type DrawIoImportPayload = {
 
 const capitalize = (value: string) =>
   value.length ? value.charAt(0).toUpperCase() + value.slice(1) : value;
+const stripTypeAnnotations = (value?: string) =>
+  value ? value.replace(/\s+[\(\[].*$/, '').trim() : value;
 
 export const config = {
   api: {
@@ -161,7 +163,7 @@ export default async function handler(
             displayName: column.name,
             referenceName,
             sourceColumnName: column.name,
-            type: column.type || 'UNKNOWN',
+            type: stripTypeAnnotations(column.type) || 'UNKNOWN',
             notNull: false,
             isPk: Boolean(column.isPrimaryKey),
             properties: emptyProperties,
