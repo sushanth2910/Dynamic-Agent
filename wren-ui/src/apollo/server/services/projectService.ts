@@ -215,7 +215,14 @@ export class ProjectService implements IProjectService {
 
   public async createProject(projectData: ProjectData) {
     const isDuckDB = projectData.type === DataSourceName.DUCKDB;
-    const defaultCatalog = isDuckDB ? 'memory' : 'wrenai';
+    // For PostgreSQL, use the actual database name as the catalog to avoid cross-database reference errors
+    // PostgreSQL doesn't support cross-database queries, so the catalog must match the connected database
+    const isPostgres = projectData.type === DataSourceName.POSTGRES;
+    const defaultCatalog = isDuckDB
+      ? 'memory'
+      : isPostgres && projectData.connectionInfo?.database
+        ? projectData.connectionInfo.database
+        : 'wrenai';
     const defaultSchema = isDuckDB ? 'main' : 'public';
     const projectValue = {
       displayName: projectData.displayName,

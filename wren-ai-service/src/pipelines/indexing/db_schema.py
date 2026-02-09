@@ -182,14 +182,17 @@ class DDLChunker:
             if join_type not in ["MANY_TO_ONE", "ONE_TO_MANY", "ONE_TO_ONE"]:
                 return None
 
-            # Get related table and foreign key column
+            # Get related table and foreign key column from condition
             is_source = table_name == models[0]
             related_table = models[1] if is_source else models[0]
             condition_parts = condition.split(" = ")
             fk_column = condition_parts[0 if is_source else 1].split(".")[1]
+            # Use the actual referenced column from the condition, not the primary key
+            # This is important when the FK references a non-primary-key column
+            ref_column = condition_parts[1 if is_source else 0].split(".")[1]
 
-            # Build foreign key constraint
-            fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({primary_keys_map[related_table]})"
+            # Build foreign key constraint using the actual referenced column
+            fk_constraint = f"FOREIGN KEY ({fk_column}) REFERENCES {related_table}({ref_column})"
 
             return {
                 "type": "FOREIGN_KEY",
