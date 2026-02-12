@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from src.core.engine import (
     Engine,
     clean_generation_result,
+    rewrite_interval_multiplication,
 )
 from src.pipelines.retrieval.sql_knowledge import SqlKnowledge
 from src.web.v1.services.ask import AskHistory
@@ -43,6 +44,12 @@ class SQLGenPostProcessor:
                 cleaned_generation_result = orjson.loads(cleaned_generation_result)[
                     "sql"
                 ]
+
+            # Rewrite invalid INTERVAL multiplication patterns
+            # (e.g., 12 * INTERVAL '1' MONTH → INTERVAL '12' MONTH)
+            cleaned_generation_result = rewrite_interval_multiplication(
+                cleaned_generation_result
+            )
 
             (
                 valid_generation_result,
@@ -192,7 +199,7 @@ _DEFAULT_TEXT_TO_SQL_RULES = """
 - ALWAYS CAST the date/time related field to "TIMESTAMP WITH TIME ZONE" type when using them in the query
     - example 1: CAST(properties_closedate AS TIMESTAMP WITH TIME ZONE)
     - example 2: CAST('2024-11-09 00:00:00' AS TIMESTAMP WITH TIME ZONE)
-    - example 3: CAST(DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AS TIMESTAMP WITH TIME ZONE)
+    - example 3: CAST(DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1' MONTH) AS TIMESTAMP WITH TIME ZONE)
 - If the user asks for a specific date, please give the date range in SQL query
     - example: "What is the total revenue for the month of 2024-11-01?"
     - answer: "SELECT SUM(r.PriceSum) FROM Revenue r WHERE CAST(r.PurchaseTimestamp AS TIMESTAMP WITH TIME ZONE) >= CAST('2024-11-01 00:00:00' AS TIMESTAMP WITH TIME ZONE) AND CAST(r.PurchaseTimestamp AS TIMESTAMP WITH TIME ZONE) < CAST('2024-11-02 00:00:00' AS TIMESTAMP WITH TIME ZONE)"
@@ -214,7 +221,11 @@ _DEFAULT_TEXT_TO_SQL_RULES = """
 - DON'T USE "FILTER(WHERE <expression>)" clause in the generated SQL query.
 - DON'T USE "EXTRACT(EPOCH FROM <expression>)" clause in the generated SQL query.
 - DON'T USE "EXTRACT()" function with INTERVAL data types as arguments
-- DON'T USE INTERVAL or generate INTERVAL-like expression in the generated SQL query.
+- DON'T USE INTERVAL with integer multiplication (e.g., N * INTERVAL '1 month') in the generated SQL query — this causes type coercion errors. Instead, always put the number directly inside the INTERVAL literal:
+    - CORRECT: CURRENT_DATE - INTERVAL '12' MONTH
+    - CORRECT: CURRENT_TIMESTAMP - INTERVAL '30' DAY
+    - WRONG: CURRENT_DATE - 12 * INTERVAL '1' MONTH
+    - WRONG: CURRENT_DATE - INTERVAL '12 month' (use singular unit name outside the quotes)
 - DON'T USE "TO_CHAR" function in the generated SQL query.
 - Aggregate functions are not allowed in the WHERE clause. Instead, they belong in the HAVING clause, which is used to filter after aggregation.
 - You can only add "ORDER BY" and "LIMIT" to the final "UNION" result.
@@ -357,7 +368,7 @@ SELECT
 FROM
   Revenue
 WHERE
-  PurchaseTimestamp >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AND
+  PurchaseTimestamp >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1' MONTH) AND
   PurchaseTimestamp < DATE_TRUNC('month', CURRENT_DATE)
 """
 
